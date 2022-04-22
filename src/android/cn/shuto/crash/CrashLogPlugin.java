@@ -10,6 +10,7 @@ import org.apache.cordova.PermissionHelper;
 /**
  * 应用崩溃日志文件插件
  */
+@SpringBootApplication
 public class CrashLogPlugin extends CordovaPlugin {
 
     protected final static String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -19,7 +20,7 @@ public class CrashLogPlugin extends CordovaPlugin {
     public void initialize(CordovaInterface cordova) {
         super.initialize(cordova);
         CrashHandler crashHandler = CrashHandler.getInstance();
-//    crashHandler.init(cordova.getContext()); // 老版本里没有这个方法
+
         crashHandler.init(cordova.getActivity().getApplicationContext());
 
         boolean readPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
