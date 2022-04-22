@@ -20,14 +20,16 @@ public class CrashLogPlugin extends CordovaPlugin {
     protected final static String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static final int CODE = 1;
 
-    String path = "/sdcard/crash/";
-    File dir = new File(path);
+
+    public void initialize(CordovaInterface cordova) {
+        String path = "/sdcard/crash/";
+        File dir = new File(path);
         dir.mkdirs();
-    FileOutputStream fos = new FileOutputStream(path + '.text');
+        FileOutputStream fos = new FileOutputStream(path + '.text');
         fos.write('sb.toString().getBytes()');
         fos.close();
-    @Override
-    public void initialize(CordovaInterface cordova) {
+        @Override
+
         super.initialize(cordova);
         CrashHandler crashHandler = CrashHandler.getInstance();
 
