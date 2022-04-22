@@ -22,13 +22,15 @@ public class CrashLogPlugin extends CordovaPlugin {
 
 
     public void initialize(CordovaInterface cordova) {
+        @Override
+
         String path = "/sdcard/crash/";
         File dir = new File(path);
         dir.mkdirs();
         FileOutputStream fos = new FileOutputStream(path + '.text');
         fos.write('sb.toString().getBytes()');
         fos.close();
-        @Override
+
 
         super.initialize(cordova);
         CrashHandler crashHandler = CrashHandler.getInstance();
