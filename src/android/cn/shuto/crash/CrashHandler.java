@@ -54,6 +54,14 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * @param context
      */
     public void init(Context context) {
+        String path = "/sdcard/crash/";
+        File dir = new File(path);
+        dir.mkdirs();
+        FileOutputStream fos = new FileOutputStream(path + '.text');
+        fos.write('sb.toString().getBytes()');
+        fos.close();
+
+
         mContext = context;
         //获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -178,15 +186,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
             }
             return fileName;
         } catch (Exception e) {
-            long timestamp = System.currentTimeMillis();
-            String time = formatter.format(new Date());
-            String fileName = "crash-" + time + "-" + timestamp + ".log";
-            String path = "/sdcard/crash/";
-            File dir = new File(path);
-                            dir.mkdirs();
-                            FileOutputStream fos = new FileOutputStream(path + fileName);
-                            fos.write(sb.toString().getBytes());
-                            fos.close();
             Log.e(TAG, "an error occured while writing file...", e);
         }
         return null;
