@@ -5,7 +5,6 @@ import android.Manifest;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PermissionHelper;
 
 /**
@@ -17,8 +16,8 @@ public class CrashLogPlugin extends CordovaPlugin {
     private static final int CODE = 1;
 
     @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
+    public void initialize(CordovaInterface cordova) {
+        super.initialize(cordova);
         CrashHandler crashHandler = CrashHandler.getInstance();
 //    crashHandler.init(cordova.getContext()); // 老版本里没有这个方法
         crashHandler.init(cordova.getActivity().getApplicationContext());
