@@ -54,12 +54,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * @param context
      */
     public void init(Context context) {
-        String path = "/sdcard/crash/";
-        File dir = new File(path);
-        dir.mkdirs();
-        FileOutputStream fos = new FileOutputStream(path + '.text');
-        fos.write('sb.toString().getBytes()');
-        fos.close();
 
 
         mContext = context;
