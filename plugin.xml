@@ -11,7 +11,7 @@
   <platform name="android">
     <config-file parent="/*" target="config.xml">
       <feature name="CrashLog">
-        <param name="android-package" value="cn.shuto.crash.CrashLogPlugin" />
+        <param name="android-package" value="com.appcrash.plugin.CrashLogPlugin" />
         <param name="onload" value="true" />
       </feature>
     </config-file>
