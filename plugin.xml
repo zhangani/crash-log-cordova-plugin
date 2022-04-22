@@ -3,22 +3,15 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
   <name>CrashLog</name>
-
-  <js-module name="CrashLog" src="www/crash-log.js">
-    <clobbers target="cordova.plugins.CrashLog" />
-  </js-module>
-
-  <platform name="android">
-    <config-file parent="/*" target="config.xml">
-      <feature name="CrashLog">
-        <param name="android-package" value="com.appcrash.plugin.CrashLogPlugin" />
-        <param name="onload" value="true" />
-      </feature>
-    </config-file>
-    <config-file parent="/manifest" target="AndroidManifest.xml">
-      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    </config-file>
-    <source-file src="src/android/cn/shuto/crash/CrashLogPlugin.java" target-dir="src/main/java/cn/shuto/crash" />
-    <source-file src="src/android/cn/shuto/crash/CrashHandler.java" target-dir="src/main/java/cn/shuto/crash" />
-  </platform>
+  <config-file parent="/*" target="config.xml">
+    <feature name="CrashLog">
+      <param name="android-package" value="cn.shuto.crash.CrashLogPlugin" />
+      <param name="onload" value="true" />
+    </feature>
+  </config-file>
+  <config-file parent="/manifest" target="AndroidManifest.xml">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  </config-file>
+  <source-file src="src/android/cn/shuto/crash/CrashLogPlugin.java" target-dir="src/cn/shuto/crash" />
+  <source-file src="src/android/cn/shuto/crash/CrashHandler.java" target-dir="src/cn/shuto/crash" />
 </plugin>
