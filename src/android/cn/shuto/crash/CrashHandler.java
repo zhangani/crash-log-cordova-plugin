@@ -11,8 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -40,15 +39,11 @@ public class CrashHandler implements UncaughtExceptionHandler {
     //用于格式化日期,作为日志文件名的一部分
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    /**
-     * 保证只有一个CrashHandler实例
-     */
+    /** 保证只有一个CrashHandler实例 */
     private CrashHandler() {
     }
 
-    /**
-     * 获取CrashHandler实例 ,单例模式
-     */
+    /** 获取CrashHandler实例 ,单例模式 */
     public static CrashHandler getInstance() {
         return INSTANCE;
     }
@@ -114,10 +109,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 收集设备参数信息
-     *
      * @param ctx
      */
-    private void collectDeviceInfo(Context ctx) {
+    public void collectDeviceInfo(Context ctx) {
         try {
             PackageManager pm = ctx.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
@@ -146,19 +140,17 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * 保存错误信息到文件中
      *
      * @param ex
-     * @return 返回文件名称, 便于将文件传送到服务器
+     * @return  返回文件名称,便于将文件传送到服务器
      */
     private String saveCrashInfo2File(Throwable ex) {
 
         StringBuffer sb = new StringBuffer();
-        //写入前给日志增加一个崩溃时间
-        String time = formatter.format(new Date());
-        sb.append("------" + time + "------\n");
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             sb.append(key + "=" + value + "\n");
         }
+
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
         ex.printStackTrace(printWriter);
@@ -171,48 +163,23 @@ public class CrashHandler implements UncaughtExceptionHandler {
         String result = writer.toString();
         sb.append(result);
         try {
-            //这里将崩溃日志名字固定化是由于cordova无法获取某一文件夹下的文件列表
-            String fileName = "shuto-crash.log";
+            long timestamp = System.currentTimeMillis();
+            String time = formatter.format(new Date());
+            String fileName = "crash-" + time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = "/sdcard/crash/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                //创建文件
-                File file = new File(path + fileName);
-                file.createNewFile();
-                appendFileContent(path + fileName, sb.toString());
+                FileOutputStream fos = new FileOutputStream(path + fileName);
+                fos.write(sb.toString().getBytes());
+                fos.close();
             }
             return fileName;
         } catch (Exception e) {
             Log.e(TAG, "an error occured while writing file...", e);
         }
         return null;
-    }
-
-    /**
-     * 追加文件：使用FileWriter
-     *
-     * @param fileName 文件全路径
-     * @param content  追加内容
-     */
-    private void appendFileContent(String fileName, String content) {
-        FileWriter writer = null;
-        try {
-            // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
-            writer = new FileWriter(fileName, true);
-            writer.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
