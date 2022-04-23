@@ -1,4 +1,4 @@
-package cn.shuto.crash;
+package com.crash.plugin;
 
 
 import android.Manifest;
