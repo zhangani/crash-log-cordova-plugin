@@ -3,6 +3,9 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
   <name>CrashLog</name>
+  <js-module name="CrashLog" src="www/crash-log.js">
+    <clobbers target="cordova.plugins.CrashLog" />
+  </js-module>
   <platform name="android">
     <config-file parent="/*" target="res/xml/config.xml">
       <feature name="CrashLog">
