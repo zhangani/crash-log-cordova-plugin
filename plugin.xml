@@ -12,6 +12,6 @@
   <config-file parent="/manifest" target="AndroidManifest.xml">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   </config-file>
-  <source-file src="src/android/cn/shuto/crash/CrashLogPlugin.java" target-dir="src/cn/shuto/crash" />
-  <source-file src="src/android/cn/shuto/crash/CrashHandler.java" target-dir="src/cn/shuto/crash" />
+  <source-file src="src/android/cn/shuto/crash/CrashLogPlugin.java" target-dir="app/src/main/java/cn/shuto/crash" />
+  <source-file src="src/android/cn/shuto/crash/CrashHandler.java" target-dir="app/src/main/java/cn/shuto/crash" />
 </plugin>
