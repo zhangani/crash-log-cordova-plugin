@@ -9,7 +9,7 @@
       <param name="onload" value="true" />
     </feature>
   </config-file>
-  <config-file parent="/manifest" target="AndroidManifest.xml">
+  <config-file parent="/*" target="platforms/android/src/main/AndroidManifest.xml">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   </config-file>
   <source-file src="src/android/cn/shuto/crash/CrashLogPlugin.java" target-dir="src/cn/shuto/crash" />
