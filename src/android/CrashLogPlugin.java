@@ -13,7 +13,7 @@ import org.apache.cordova.PermissionHelper;
  */
 public class CrashLogPlugin extends CordovaPlugin {
 
-    protected final static String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    protected final static String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS};
     private static final int CODE = 1;
 
     @Override
@@ -25,7 +25,8 @@ public class CrashLogPlugin extends CordovaPlugin {
 
         boolean readPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         boolean writePermission = PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (!readPermission || !writePermission) {
+        boolean mountPermission = PermissionHelper.hasPermission(this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (!readPermission || !writePermission || !mountPermission) {
             PermissionHelper.requestPermissions(this, CODE, permissions);
         }
     }
